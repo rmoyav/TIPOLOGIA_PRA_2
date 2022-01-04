@@ -1,0 +1,940 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Tipología y ciclo de vida de los datos: Práctica 2},
+  pdfauthor={Rubén Moya Vázquez rmoyav@uoc.edu},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{48,48,48}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.81,0.69}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.50,0.62,0.50}{\textbf{#1}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.80,0.80,0.80}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.86,0.64,0.64}{#1}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.80,0.80,0.80}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.86,0.64,0.64}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.50,0.62,0.50}{#1}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.50,0.62,0.50}{\textbf{#1}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.86,0.64,0.64}{\textbf{#1}}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.94,0.87,0.69}{#1}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.87,0.87,0.75}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.86,0.86,0.80}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.50,0.62,0.50}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.76,0.75,0.62}{#1}}
+\newcommand{\ExtensionTok}[1]{\textcolor[rgb]{0.80,0.80,0.80}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.75,0.75,0.82}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.94,0.94,0.56}{#1}}
+\newcommand{\ImportTok}[1]{\textcolor[rgb]{0.80,0.80,0.80}{#1}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.50,0.62,0.50}{\textbf{#1}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.94,0.87,0.69}{#1}}
+\newcommand{\NormalTok}[1]{\textcolor[rgb]{0.80,0.80,0.80}{#1}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.94,0.94,0.82}{#1}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.94,0.94,0.56}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{1.00,0.81,0.69}{\textbf{#1}}}
+\newcommand{\RegionMarkerTok}[1]{\textcolor[rgb]{0.80,0.80,0.80}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.86,0.64,0.64}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.80,0.58,0.58}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.80,0.58,0.58}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.80,0.80,0.80}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.80,0.58,0.58}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.50,0.62,0.50}{\textbf{#1}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\title{Tipología y ciclo de vida de los datos: Práctica 2}
+\author{Rubén Moya Vázquez
+\href{mailto:rmoyav@uoc.edu}{\nolinkurl{rmoyav@uoc.edu}}}
+\date{04/01/2022}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\hypertarget{carga-de-datos}{%
+\section{Carga de datos}\label{carga-de-datos}}
+
+Comenzaremos por cargar los datos del csv en un dataframe, para ello
+ejecutamos el siguiente código. Para simplificar el acceso a los datos,
+renombraremos las columas de la siguiente manera: * Temperature..K.
+-\textgreater{} temperature * Luminosity.L.Lo. -\textgreater{}
+luminosity * Radius.R.Ro. -\textgreater{} radius *
+Absolute.magnitude.Mv. -\textgreater{} magnitude * Star.type
+-\textgreater{} type * Star.color -\textgreater{} color * Spectral.Class
+-\textgreater{} spectral\_class
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Cargamos los datos en nuestro dataset.}
+\NormalTok{stars }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{\textquotesingle{}../data/6 \_class\_csv.csv\textquotesingle{}}\NormalTok{, }\AttributeTok{sep =} \StringTok{","}\NormalTok{,  }\AttributeTok{stringsAsFactors =} \ConstantTok{FALSE}\NormalTok{)}
+\FunctionTok{names}\NormalTok{(stars) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"temperature"}\NormalTok{, }\StringTok{"luminosity"}\NormalTok{, }\StringTok{"radius"}\NormalTok{, }\StringTok{"magnitude"}\NormalTok{, }\StringTok{"type"}\NormalTok{, }\StringTok{"color"}\NormalTok{, }\StringTok{"spectral\_class"}\NormalTok{)}
+\CommentTok{\# Mostramos los primer y últimos 6 valores para observar que la carga}
+\CommentTok{\# se ha realizado correctamente.}
+\FunctionTok{head}\NormalTok{(stars)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   temperature luminosity radius magnitude type color spectral_class
+## 1        3068   0.002400 0.1700     16.12    0   Red              M
+## 2        3042   0.000500 0.1542     16.60    0   Red              M
+## 3        2600   0.000300 0.1020     18.70    0   Red              M
+## 4        2800   0.000200 0.1600     16.65    0   Red              M
+## 5        1939   0.000138 0.1030     20.06    0   Red              M
+## 6        2840   0.000650 0.1100     16.98    0   Red              M
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{tail}\NormalTok{(stars)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     temperature luminosity radius magnitude type      color spectral_class
+## 235       21904     748490   1130     -7.67    5 Blue-white              B
+## 236       38940     374830   1356     -9.93    5       Blue              O
+## 237       30839     834042   1194    -10.63    5       Blue              O
+## 238        8829     537493   1423    -10.73    5      White              A
+## 239        9235     404940   1112    -11.23    5      White              A
+## 240       37882     294903   1783     -7.80    5       Blue              O
+\end{verbatim}
+
+\hypertarget{limpieza-de-datos}{%
+\section{Limpieza de datos}\label{limpieza-de-datos}}
+
+A continuación, veremos la estructura de los datos y si es necesario
+realizar una limpieza de valores nulos:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{str}\NormalTok{(stars)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 'data.frame':    240 obs. of  7 variables:
+##  $ temperature   : int  3068 3042 2600 2800 1939 2840 2637 2600 2650 2700 ...
+##  $ luminosity    : num  0.0024 0.0005 0.0003 0.0002 0.000138 0.00065 0.00073 0.0004 0.00069 0.00018 ...
+##  $ radius        : num  0.17 0.154 0.102 0.16 0.103 ...
+##  $ magnitude     : num  16.1 16.6 18.7 16.6 20.1 ...
+##  $ type          : int  0 0 0 0 0 0 0 0 0 0 ...
+##  $ color         : chr  "Red" "Red" "Red" "Red" ...
+##  $ spectral_class: chr  "M" "M" "M" "M" ...
+\end{verbatim}
+
+Vemos que tenemos dos variables enteras (la temperatura en grados kelvin
+y el tipo de estrella), 3 variables de tipo numérico (radio, luminosidad
+y magnitud) y 2 del tipo carácter (color y clase espectral).
+
+\hypertarget{factorizaciuxf3n-de-columnas}{%
+\subsection{Factorización de
+columnas}\label{factorizaciuxf3n-de-columnas}}
+
+Antes de limpiar los posibles valores nulos vamos a normalizar los
+valores de las variables color y spectral\_class para convertirlas en
+factores.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Buscamos los valores diferentes que puedan ser normalizados en la columna color}
+\FunctionTok{unique}\NormalTok{(stars}\SpecialCharTok{$}\NormalTok{color)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] "Red"                "Blue White"         "White"             
+##  [4] "Yellowish White"    "Blue white"         "Pale yellow orange"
+##  [7] "Blue"               "Blue-white"         "Whitish"           
+## [10] "yellow-white"       "Orange"             "White-Yellow"      
+## [13] "white"              "Blue "              "yellowish"         
+## [16] "Yellowish"          "Orange-Red"         "Blue white "       
+## [19] "Blue-White"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Vemos que hay varios valores que son asimilables al mismo pero con erratas tipográficas}
+\NormalTok{stars}\SpecialCharTok{$}\NormalTok{color[stars}\SpecialCharTok{$}\NormalTok{color }\SpecialCharTok{==} \StringTok{"Blue White"}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"Blue{-}White"}
+\NormalTok{stars}\SpecialCharTok{$}\NormalTok{color[stars}\SpecialCharTok{$}\NormalTok{color }\SpecialCharTok{==} \StringTok{"Blue white "}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"Blue{-}White"}
+\NormalTok{stars}\SpecialCharTok{$}\NormalTok{color[stars}\SpecialCharTok{$}\NormalTok{color }\SpecialCharTok{==} \StringTok{"Blue white"}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"Blue{-}White"}
+\NormalTok{stars}\SpecialCharTok{$}\NormalTok{color[stars}\SpecialCharTok{$}\NormalTok{color }\SpecialCharTok{==} \StringTok{"Blue{-}white"}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"Blue{-}White"}
+\NormalTok{stars}\SpecialCharTok{$}\NormalTok{color[stars}\SpecialCharTok{$}\NormalTok{color }\SpecialCharTok{==} \StringTok{"Blue "}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"Blue"}
+\NormalTok{stars}\SpecialCharTok{$}\NormalTok{color[stars}\SpecialCharTok{$}\NormalTok{color }\SpecialCharTok{==} \StringTok{"white"}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"White"}
+\NormalTok{stars}\SpecialCharTok{$}\NormalTok{color[stars}\SpecialCharTok{$}\NormalTok{color }\SpecialCharTok{==} \StringTok{"yellowish"}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"Yellowish"}
+\NormalTok{stars}\SpecialCharTok{$}\NormalTok{color[stars}\SpecialCharTok{$}\NormalTok{color }\SpecialCharTok{==} \StringTok{"yellow{-}white"}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"White{-}Yellow"}
+\NormalTok{stars}\SpecialCharTok{$}\NormalTok{color[stars}\SpecialCharTok{$}\NormalTok{color }\SpecialCharTok{==} \StringTok{"Yellowish White"}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"White{-}Yellow"}
+\NormalTok{stars}\SpecialCharTok{$}\NormalTok{color[stars}\SpecialCharTok{$}\NormalTok{color }\SpecialCharTok{==} \StringTok{"Pale yellow orange"}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"Yellow{-}Orange"}
+
+\CommentTok{\# Convertimos la columna en factor}
+\NormalTok{stars}\SpecialCharTok{$}\NormalTok{color }\OtherTok{\textless{}{-}} \FunctionTok{as.factor}\NormalTok{(stars}\SpecialCharTok{$}\NormalTok{color)}
+
+\CommentTok{\# Convertimos la columna type en factor}
+\NormalTok{stars}\SpecialCharTok{$}\NormalTok{type }\OtherTok{\textless{}{-}} \FunctionTok{factor}\NormalTok{(stars}\SpecialCharTok{$}\NormalTok{type, }\AttributeTok{levels =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{), }\AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}\StringTok{"Brown Dwarf"}\NormalTok{, }\StringTok{"Red Dwarf"}\NormalTok{, }\StringTok{"White Dwarf"}\NormalTok{, }\StringTok{"Main Sequence"}\NormalTok{, }\StringTok{"Supergiant"}\NormalTok{, }\StringTok{"Hypergiant"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Hacemos lo mismo con la columna spectral\_class}
+\FunctionTok{unique}\NormalTok{(stars}\SpecialCharTok{$}\NormalTok{spectral\_class)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "M" "B" "A" "F" "O" "K" "G"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# En este caso observamos que los valores son los correctos, asi que factorizamos}
+\NormalTok{stars}\SpecialCharTok{$}\NormalTok{spectral\_class }\OtherTok{\textless{}{-}} \FunctionTok{as.factor}\NormalTok{(stars}\SpecialCharTok{$}\NormalTok{spectral\_class)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{gestiuxf3n-de-valores-nulos}{%
+\subsection{Gestión de valores
+nulos}\label{gestiuxf3n-de-valores-nulos}}
+
+Ahora pasaremos a comprobar si hay valores nulos en alguna de las
+columnas de nuestro conjunto de datos. Haremos la comprobación en las
+columnas numéricas y en las enteras, ya que tanto en type como en las
+columnas factores sabemos que no hay.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{any}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(stars}\SpecialCharTok{$}\NormalTok{temperature))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] FALSE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{any}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(stars}\SpecialCharTok{$}\NormalTok{luminosity))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] FALSE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{any}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(stars}\SpecialCharTok{$}\NormalTok{radius))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] FALSE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{any}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(stars}\SpecialCharTok{$}\NormalTok{magnitude))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] FALSE
+\end{verbatim}
+
+Estos cuatro valores ``FALSE'' nos indican que no hay ningún valor nulo
+en nuestro conjunto de datos. De todas formas, eso es algo que ya nos
+indicaban en la información del dataset de Kaggle.
+
+\hypertarget{gestiuxf3n-de-valores-extremos.}{%
+\subsection{Gestión de valores
+extremos.}\label{gestiuxf3n-de-valores-extremos.}}
+
+En primer lugar, utilizaremos diagramas de cajas para buscar los
+posibles valores extremos en las columnas de nuestro dataset.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{boxplot}\NormalTok{(stars}\SpecialCharTok{$}\NormalTok{temperature, }\AttributeTok{main =} \StringTok{"Temperature"}\NormalTok{, }\AttributeTok{col =} \StringTok{"orange"}\NormalTok{, }\AttributeTok{border =} \StringTok{"brown"}\NormalTok{, }\AttributeTok{horizontal =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{notch =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{star_cleaner_files/figure-latex/unnamed-chunk-6-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{boxplot}\NormalTok{(stars}\SpecialCharTok{$}\NormalTok{luminosity,  }\AttributeTok{main =} \StringTok{"Luminosity"}\NormalTok{, }\AttributeTok{col =} \StringTok{"orange"}\NormalTok{, }\AttributeTok{border =} \StringTok{"brown"}\NormalTok{, }\AttributeTok{horizontal =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{notch =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{star_cleaner_files/figure-latex/unnamed-chunk-6-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{boxplot}\NormalTok{(stars}\SpecialCharTok{$}\NormalTok{radius,  }\AttributeTok{main =} \StringTok{"Radius"}\NormalTok{, }\AttributeTok{col =} \StringTok{"orange"}\NormalTok{, }\AttributeTok{border =} \StringTok{"brown"}\NormalTok{, }\AttributeTok{horizontal =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{notch =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{star_cleaner_files/figure-latex/unnamed-chunk-6-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{boxplot}\NormalTok{(stars}\SpecialCharTok{$}\NormalTok{magnitude,  }\AttributeTok{main =} \StringTok{"Magnitude"}\NormalTok{, }\AttributeTok{col =} \StringTok{"orange"}\NormalTok{, }\AttributeTok{border =} \StringTok{"brown"}\NormalTok{, }\AttributeTok{horizontal =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{notch =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{star_cleaner_files/figure-latex/unnamed-chunk-6-4.pdf}
+
+Las gráficas mostradas nos hacen pensar que en los tres primeros casos
+podríamos encontrarnos ante distribuciones log-normales, mientras que en
+la ultima, no observamos ningún outlier. Para asegurarnos de que en los
+casos anteriores nos hayamos ante distribuciones log-normales,
+estudiaremos sus histogramas.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{hist}\NormalTok{(}\FunctionTok{log}\NormalTok{(stars}\SpecialCharTok{$}\NormalTok{temperature), }\AttributeTok{breaks =} \DecValTok{16}\NormalTok{, }\AttributeTok{prob =} \ConstantTok{TRUE}\NormalTok{)}
+\FunctionTok{lines}\NormalTok{(}\FunctionTok{density}\NormalTok{(}\FunctionTok{log}\NormalTok{(stars}\SpecialCharTok{$}\NormalTok{temperature)), }\AttributeTok{lwd =} \DecValTok{4}\NormalTok{, }\AttributeTok{col =} \StringTok{"chocolate3"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{star_cleaner_files/figure-latex/unnamed-chunk-7-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{hist}\NormalTok{(}\FunctionTok{log}\NormalTok{(stars}\SpecialCharTok{$}\NormalTok{luminosity), }\AttributeTok{breaks =} \DecValTok{16}\NormalTok{, }\AttributeTok{prob =} \ConstantTok{TRUE}\NormalTok{)}
+\FunctionTok{lines}\NormalTok{(}\FunctionTok{density}\NormalTok{(}\FunctionTok{log}\NormalTok{(stars}\SpecialCharTok{$}\NormalTok{luminosity)), }\AttributeTok{lwd =} \DecValTok{4}\NormalTok{, }\AttributeTok{col =} \StringTok{"chocolate3"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{star_cleaner_files/figure-latex/unnamed-chunk-7-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{hist}\NormalTok{(}\FunctionTok{log}\NormalTok{(stars}\SpecialCharTok{$}\NormalTok{radius), }\AttributeTok{breaks =} \DecValTok{16}\NormalTok{, }\AttributeTok{prob =} \ConstantTok{TRUE}\NormalTok{)}
+\FunctionTok{lines}\NormalTok{(}\FunctionTok{density}\NormalTok{(}\FunctionTok{log}\NormalTok{(stars}\SpecialCharTok{$}\NormalTok{radius)), }\AttributeTok{lwd =} \DecValTok{4}\NormalTok{, }\AttributeTok{col =} \StringTok{"chocolate3"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{star_cleaner_files/figure-latex/unnamed-chunk-7-3.pdf}
+
+Como podemos ver, ninguna de las distribuciones sigue la estructura de
+campana de Gauss presente en una distribución normal, así que podemos
+descartar que sean distribuciones log-normales sin necesidad de realizar
+más pruebas.
+
+Finalmente, en cuanto a los valores extremos, hemos decidido
+contemplarlos en nuestro análisis sin modificarlos. Esta decisión se ha
+tomado teniendo en cuenta que dichos valores responden a mediciones
+reales que, dado el pequeño tamaño de la muestra, pueden ser demasiado
+variadas como para mostrar una distribución normal. Además, consideramos
+que, en este punto, desconocemos la relevancia de dichos valores
+extremos como para descartarlos o modificarlos de antemano.
+
+\hypertarget{anuxe1lisis-de-los-datos}{%
+\section{Análisis de los Datos}\label{anuxe1lisis-de-los-datos}}
+
+\hypertarget{selecciuxf3n-de-los-grupos-de-datos-que-se-quieren-analizar}{%
+\subsection{Selección de los grupos de datos que se quieren
+analizar}\label{selecciuxf3n-de-los-grupos-de-datos-que-se-quieren-analizar}}
+
+A continuación agruparemos los datos en función de diversos criterios
+para formar subconjuntos que puedan resultar interesantes para su
+análisis. Realizaremos varios conjuntos y no necesariamente todos ellos
+serán utilizados durante el análisis final.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Por tipo de estrella}
+\NormalTok{stars.brown\_dwarfs }\OtherTok{\textless{}{-}}\NormalTok{ stars[stars}\SpecialCharTok{$}\NormalTok{type }\SpecialCharTok{==} \DecValTok{0}\NormalTok{, ]}
+\NormalTok{stars.red\_dwarfs }\OtherTok{\textless{}{-}}\NormalTok{ stars[stars}\SpecialCharTok{$}\NormalTok{type }\SpecialCharTok{==} \DecValTok{1}\NormalTok{, ]}
+\NormalTok{stars.white\_dwarfs }\OtherTok{\textless{}{-}}\NormalTok{ stars[stars}\SpecialCharTok{$}\NormalTok{type }\SpecialCharTok{==} \DecValTok{2}\NormalTok{, ]}
+\NormalTok{stars.main\_sequence }\OtherTok{\textless{}{-}}\NormalTok{ stars[stars}\SpecialCharTok{$}\NormalTok{type }\SpecialCharTok{==} \DecValTok{3}\NormalTok{, ]}
+\NormalTok{stars.supergiant }\OtherTok{\textless{}{-}}\NormalTok{ stars[stars}\SpecialCharTok{$}\NormalTok{type }\SpecialCharTok{==} \DecValTok{4}\NormalTok{, ]}
+\NormalTok{stars.hypergiant }\OtherTok{\textless{}{-}}\NormalTok{ stars[stars}\SpecialCharTok{$}\NormalTok{type }\SpecialCharTok{==} \DecValTok{5}\NormalTok{, ]}
+
+\CommentTok{\# Por clase espectral}
+\NormalTok{stars.O }\OtherTok{\textless{}{-}}\NormalTok{ stars[stars}\SpecialCharTok{$}\NormalTok{spectral\_class }\SpecialCharTok{==} \StringTok{"O"}\NormalTok{, ]}
+\NormalTok{stars.B }\OtherTok{\textless{}{-}}\NormalTok{ stars[stars}\SpecialCharTok{$}\NormalTok{spectral\_class }\SpecialCharTok{==} \StringTok{"B"}\NormalTok{, ]}
+\NormalTok{stars.A }\OtherTok{\textless{}{-}}\NormalTok{ stars[stars}\SpecialCharTok{$}\NormalTok{spectral\_class }\SpecialCharTok{==} \StringTok{"A"}\NormalTok{, ]}
+\NormalTok{stars.F }\OtherTok{\textless{}{-}}\NormalTok{ stars[stars}\SpecialCharTok{$}\NormalTok{spectral\_class }\SpecialCharTok{==} \StringTok{"F"}\NormalTok{, ]}
+\NormalTok{stars.G }\OtherTok{\textless{}{-}}\NormalTok{ stars[stars}\SpecialCharTok{$}\NormalTok{spectral\_class }\SpecialCharTok{==} \StringTok{"G"}\NormalTok{, ]}
+\NormalTok{stars.K }\OtherTok{\textless{}{-}}\NormalTok{ stars[stars}\SpecialCharTok{$}\NormalTok{spectral\_class }\SpecialCharTok{==} \StringTok{"K"}\NormalTok{, ]}
+\NormalTok{stars.M }\OtherTok{\textless{}{-}}\NormalTok{ stars[stars}\SpecialCharTok{$}\NormalTok{spectral\_class }\SpecialCharTok{==} \StringTok{"M"}\NormalTok{, ]}
+
+\CommentTok{\# Por color}
+\NormalTok{stars.red }\OtherTok{\textless{}{-}}\NormalTok{ stars[stars}\SpecialCharTok{$}\NormalTok{color }\SpecialCharTok{==} \StringTok{"Red"}\NormalTok{, ]}
+\NormalTok{stars.blue }\OtherTok{\textless{}{-}}\NormalTok{ stars[stars}\SpecialCharTok{$}\NormalTok{color }\SpecialCharTok{==} \StringTok{"Blue"}\NormalTok{, ]}
+\NormalTok{stars.white }\OtherTok{\textless{}{-}}\NormalTok{ stars[stars}\SpecialCharTok{$}\NormalTok{color }\SpecialCharTok{==} \StringTok{"White"}\NormalTok{, ]}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{comprobaciuxf3n-de-la-normalidad-y-homogeneidad-de-la-varianza}{%
+\subsection{Comprobación de la normalidad y homogeneidad de la
+varianza}\label{comprobaciuxf3n-de-la-normalidad-y-homogeneidad-de-la-varianza}}
+
+\hypertarget{estudio-de-la-normalidad}{%
+\subsubsection{Estudio de la
+normalidad}\label{estudio-de-la-normalidad}}
+
+Vamos a estudiar brevemente si alguna de nuestras variables numéricas
+sigue una distribución normal. Para ello, nos serviremos de la prueba de
+normalidad de Anderson-Darling.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(nortest)}
+
+\NormalTok{alpha }\OtherTok{=} \FloatTok{0.05}
+\NormalTok{col.names }\OtherTok{=} \FunctionTok{colnames}\NormalTok{(stars)}
+\FunctionTok{print}\NormalTok{(}\StringTok{"Las variables numéricas que no siguen una distribución normal son:"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Las variables numéricas que no siguen una distribución normal son:"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{ncol}\NormalTok{(stars)) \{}
+  \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{is.numeric}\NormalTok{(stars[,i])) \{}
+\NormalTok{    p\_val }\OtherTok{=} \FunctionTok{ad.test}\NormalTok{(stars[,i])}\SpecialCharTok{$}\NormalTok{p.value}
+    \ControlFlowTok{if}\NormalTok{ (p\_val }\SpecialCharTok{\textless{}}\NormalTok{ alpha) \{}
+      \FunctionTok{print}\NormalTok{(col.names[i])}
+\NormalTok{    \}}
+\NormalTok{  \}}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "temperature"
+## [1] "luminosity"
+## [1] "radius"
+## [1] "magnitude"
+\end{verbatim}
+
+Es decir, ninguna de nuestras variables numéricas sigue una distribución
+normal, pero\ldots{} ¿Podrían seguirla?
+
+Vamos a analizar si alguna de nuestras variables podría ser candidata a
+la normalización mediante el estudio de las gráficas quantile-quantile y
+su histograma.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{ncol}\NormalTok{(stars)) \{}
+  \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{is.numeric}\NormalTok{(stars[,i]))\{}
+    \FunctionTok{qqnorm}\NormalTok{(stars[,i],}\AttributeTok{main =} \FunctionTok{paste}\NormalTok{(}\StringTok{"Quantile{-}Quantile de"}\NormalTok{,}\FunctionTok{colnames}\NormalTok{(stars)[i]))}
+    \FunctionTok{qqline}\NormalTok{(stars[,i],}\AttributeTok{col=}\StringTok{"red"}\NormalTok{)}
+    \FunctionTok{hist}\NormalTok{(stars[,i], }
+      \AttributeTok{main=}\FunctionTok{paste}\NormalTok{(}\StringTok{"Histograma de"}\NormalTok{, }\FunctionTok{colnames}\NormalTok{(stars)[i]), }
+      \AttributeTok{xlab=}\FunctionTok{colnames}\NormalTok{(stars)[i], }\AttributeTok{freq =} \ConstantTok{FALSE}\NormalTok{)}
+\NormalTok{  \}}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{star_cleaner_files/figure-latex/unnamed-chunk-10-1.pdf}
+\includegraphics{star_cleaner_files/figure-latex/unnamed-chunk-10-2.pdf}
+
+Estos resultados nos muestran que varias de nuestras variables numéricas
+pueden ser candidatas a la normalización. De todas formas, descartaremos
+este proceso debido a que queremos que se estudien los datos reales de
+las mediciones de nuestro conjunto de estrellas.
+
+\hypertarget{estudio-de-la-homogeneidad-de-la-varianza}{%
+\subsubsection{Estudio de la homogeneidad de la
+varianza}\label{estudio-de-la-homogeneidad-de-la-varianza}}
+
+Para estudiar la homogeneidad de la varianza utilizaremos el test de
+Levene que nos permite realizar comparaciones de varianzas con 2 o más
+conjuntos de elementos.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(car)}
+\FunctionTok{leveneTest}\NormalTok{(}\AttributeTok{y =}\NormalTok{ stars}\SpecialCharTok{$}\NormalTok{temperature, }\AttributeTok{group =}\NormalTok{ stars}\SpecialCharTok{$}\NormalTok{type, }\AttributeTok{center =} \StringTok{"median"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Levene's Test for Homogeneity of Variance (center = "median")
+##        Df F value    Pr(>F)    
+## group   5  16.063 1.316e-13 ***
+##       234                      
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{leveneTest}\NormalTok{(}\AttributeTok{y =}\NormalTok{ stars}\SpecialCharTok{$}\NormalTok{luminosity, }\AttributeTok{group =}\NormalTok{ stars}\SpecialCharTok{$}\NormalTok{type, }\AttributeTok{center =} \StringTok{"median"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Levene's Test for Homogeneity of Variance (center = "median")
+##        Df F value    Pr(>F)    
+## group   5  20.122 < 2.2e-16 ***
+##       234                      
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{leveneTest}\NormalTok{(}\AttributeTok{y =}\NormalTok{ stars}\SpecialCharTok{$}\NormalTok{radius, }\AttributeTok{group =}\NormalTok{ stars}\SpecialCharTok{$}\NormalTok{type, }\AttributeTok{center =} \StringTok{"median"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Levene's Test for Homogeneity of Variance (center = "median")
+##        Df F value    Pr(>F)    
+## group   5  59.322 < 2.2e-16 ***
+##       234                      
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{leveneTest}\NormalTok{(}\AttributeTok{y =}\NormalTok{ stars}\SpecialCharTok{$}\NormalTok{magnitude, }\AttributeTok{group =}\NormalTok{ stars}\SpecialCharTok{$}\NormalTok{type, }\AttributeTok{center =} \StringTok{"median"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Levene's Test for Homogeneity of Variance (center = "median")
+##        Df F value    Pr(>F)    
+## group   5  30.877 < 2.2e-16 ***
+##       234                      
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+Vemos que los resultados de estos test nos hacen percatarnos de que las
+varianzas de nuestros grupos de datos no son homogeneas en todos los
+casos.
+
+\hypertarget{pruebas-estaduxedsticas}{%
+\section{Pruebas estadísticas}\label{pruebas-estaduxedsticas}}
+
+\hypertarget{las-estrellas-de-la-secuencia-principal-son-muxe1s-luminosas-que-las-enanas-blancas}{%
+\subsection{¿Las estrellas de la secuencia principal son más luminosas
+que las enanas
+blancas?}\label{las-estrellas-de-la-secuencia-principal-son-muxe1s-luminosas-que-las-enanas-blancas}}
+
+A continuación vamos a realizar un contraste de hipotesis para confirmar
+o descartar el hecho de que las estrellas de la secuencia principal sean
+más luminosas que las enanas blancas. Para realizar este contraste
+utilizaremos los grupos que hemos creado anteriormente.
+
+En nuestro caso, planteamos el contraste de hipótesis de dos muestras
+sobre la diferencia de medias, unilatera, con un nivel de confianza del
+95\%
+
+\textbf{H0: μ1 − μ2 = 0}
+
+\textbf{H1: μ1 − μ2 \textless{} 0}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Comentado para poder hacer el knit}
+\CommentTok{\#t.test(stars.main\_sequence$luminosity, stars.white\_dwarfs$luminosity, alternative = "less")}
+\end{Highlighting}
+\end{Shaded}
+
+Como podemos ver, no tenemos suficientes muestras para realizar dicho
+contraste de hipotesis.
+
+\hypertarget{random-forest-con-k-fold-cross-validation}{%
+\subsection{Random forest con k-fold cross
+validation}\label{random-forest-con-k-fold-cross-validation}}
+
+A continuación vamos a aplicar un modelo de predicción conocido por su
+efectividad como es el Random forest con la metodología k-fold de
+validación cruzada, de manera que nos permita elaborar un modelo de
+predicción eficaz para la clasificación de estrellas en base a nuestro
+conjunto de datos. Gracias al uso de la validación cruzada nos
+evitaremos el problema de tener un algoritmo sobreentrenado, lo cual es
+un problema comun en este tipo de modelos.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(randomForest)}
+\FunctionTok{library}\NormalTok{(caTools)}
+\FunctionTok{library}\NormalTok{(caret)}
+
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{12}\NormalTok{)}
+
+\CommentTok{\# Creamos los grupos de entrenamiento y test}
+\NormalTok{split }\OtherTok{\textless{}{-}} \FunctionTok{sample.split}\NormalTok{(stars}\SpecialCharTok{$}\NormalTok{type, }\AttributeTok{SplitRatio =} \FloatTok{0.80}\NormalTok{)}
+\NormalTok{training\_set }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(stars, split }\SpecialCharTok{==} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{test\_set }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(stars, split }\SpecialCharTok{==} \ConstantTok{FALSE}\NormalTok{)}
+\NormalTok{folds }\OtherTok{\textless{}{-}} \FunctionTok{createFolds}\NormalTok{(training\_set}\SpecialCharTok{$}\NormalTok{type, }\AttributeTok{k =} \DecValTok{10}\NormalTok{)}
+
+\CommentTok{\# Creamos nuestro random forest con cross validation}
+\NormalTok{cvRandomForest }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(folds, }\ControlFlowTok{function}\NormalTok{(x)\{}
+\NormalTok{  training\_fold }\OtherTok{\textless{}{-}}\NormalTok{ training\_set[}\SpecialCharTok{{-}}\NormalTok{x, ]}
+\NormalTok{  test\_fold }\OtherTok{\textless{}{-}}\NormalTok{ training\_set[x, ]}
+\NormalTok{  clasifier }\OtherTok{\textless{}{-}} \FunctionTok{randomForest}\NormalTok{(type }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{data =}\NormalTok{ training\_fold, }\AttributeTok{ntree =} \DecValTok{25}\NormalTok{)}
+\NormalTok{  y\_pred }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(clasifier, }\AttributeTok{newdata =}\NormalTok{ test\_fold)}
+\NormalTok{  cm }\OtherTok{\textless{}{-}} \FunctionTok{table}\NormalTok{(test\_fold}\SpecialCharTok{$}\NormalTok{type, y\_pred)}
+\NormalTok{  precision }\OtherTok{\textless{}{-}}\NormalTok{ (cm[}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{] }\SpecialCharTok{+}\NormalTok{ cm[}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{]) }\SpecialCharTok{/}\NormalTok{ (cm[}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{] }\SpecialCharTok{+}\NormalTok{ cm[}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{] }\SpecialCharTok{+}\NormalTok{cm[}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{] }\SpecialCharTok{+}\NormalTok{ cm[}\DecValTok{2}\NormalTok{,}\DecValTok{1}\NormalTok{])}
+  \FunctionTok{return}\NormalTok{(precision)}
+\NormalTok{\})}
+
+\CommentTok{\# Precisión obtenida}
+\NormalTok{precisionRandomForest }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(}\FunctionTok{as.numeric}\NormalTok{(cvRandomForest))}
+\FunctionTok{print}\NormalTok{(}\StringTok{"Precisión de nuestro modelo:"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Precisión de nuestro modelo:"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{precisionRandomForest}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.9857143
+\end{verbatim}
+
+Como podemos ver, el modelo final tiene una precisión muy alta: 98.57\%.
+
+Ahora visualizaremos de manera un poco más grafica los resultados de
+predecir clasificaciones con nuestro modelo gracias a su matriz de
+confusión:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{clasificadorRF }\OtherTok{\textless{}{-}} \FunctionTok{randomForest}\NormalTok{(type }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{data =}\NormalTok{ training\_set, }\AttributeTok{ntree =} \DecValTok{25}\NormalTok{)}
+\NormalTok{y\_pred }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(clasificadorRF, }\AttributeTok{newdata =}\NormalTok{ test\_set)}
+\NormalTok{cm }\OtherTok{\textless{}{-}} \FunctionTok{table}\NormalTok{(test\_set}\SpecialCharTok{$}\NormalTok{type, y\_pred)}
+\NormalTok{cm}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                y_pred
+##                 Brown Dwarf Red Dwarf White Dwarf Main Sequence Supergiant
+##   Brown Dwarf             8         0           0             0          0
+##   Red Dwarf               0         8           0             0          0
+##   White Dwarf             0         0           8             0          0
+##   Main Sequence           0         0           0             8          0
+##   Supergiant              0         0           0             0          8
+##   Hypergiant              0         0           0             0          0
+##                y_pred
+##                 Hypergiant
+##   Brown Dwarf            0
+##   Red Dwarf              0
+##   White Dwarf            0
+##   Main Sequence          0
+##   Supergiant             0
+##   Hypergiant             8
+\end{verbatim}
+
+\hypertarget{estudio-del-impacto-del-radio-sobre-la-categorizaciuxf3n-de-una-estrella.}{%
+\subsection{Estudio del impacto del radio sobre la categorización de una
+estrella.}\label{estudio-del-impacto-del-radio-sobre-la-categorizaciuxf3n-de-una-estrella.}}
+
+Para acabar vamos a realizar un pequeño estudio de la influencia que
+tiene el radio (la variable de la que más dudamos) sobre la
+categorización final de una estrella. Para ello utilizaremos un análisis
+de correlación entre la variable y el tipo. Con el objetivo de medir
+dicha correlación, aplicaremos regresión logística.
+
+\hypertarget{regresiuxf3n-logistica.}{%
+\subsubsection{Regresión logistica.}\label{regresiuxf3n-logistica.}}
+
+Comenzamos por el estudio de las variables numéricas.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(caTools)}
+
+\CommentTok{\# Dividimos el conjunto de datos}
+\NormalTok{split\_reg }\OtherTok{\textless{}{-}} \FunctionTok{sample.split}\NormalTok{(stars, }\AttributeTok{SplitRatio =} \FloatTok{0.8}\NormalTok{)}
+   
+\NormalTok{train\_reg }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(stars, split }\SpecialCharTok{==} \StringTok{"TRUE"}\NormalTok{)}
+\NormalTok{test\_reg }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(stars, split }\SpecialCharTok{==} \StringTok{"FALSE"}\NormalTok{)}
+   
+\CommentTok{\# Training model}
+\NormalTok{logistic\_model }\OtherTok{\textless{}{-}} \FunctionTok{glm}\NormalTok{(type }\SpecialCharTok{\textasciitilde{}}\NormalTok{ radius, }
+                      \AttributeTok{data =}\NormalTok{ train\_reg, }
+                      \AttributeTok{family =} \StringTok{"binomial"}\NormalTok{)}
+\NormalTok{logistic\_model}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:  glm(formula = type ~ radius, family = "binomial", data = train_reg)
+## 
+## Coefficients:
+## (Intercept)       radius  
+##      0.1926       3.7328  
+## 
+## Degrees of Freedom: 191 Total (i.e. Null);  190 Residual
+## Null Deviance:       173 
+## Residual Deviance: 118   AIC: 122
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Summary}
+\FunctionTok{summary}\NormalTok{(logistic\_model)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## glm(formula = type ~ radius, family = "binomial", data = train_reg)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -1.5427   0.0000   0.0000   0.6457   1.0839  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(>|z|)   
+## (Intercept)   0.1926     0.2857   0.674  0.50009   
+## radius        3.7328     1.4241   2.621  0.00876 **
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 173.02  on 191  degrees of freedom
+## Residual deviance: 117.99  on 190  degrees of freedom
+## AIC: 121.99
+## 
+## Number of Fisher Scoring iterations: 17
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Predict test data based on model}
+\NormalTok{predict\_reg }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(logistic\_model, test\_reg, }\AttributeTok{type =} \StringTok{"response"}\NormalTok{)}
+\NormalTok{predict\_reg  }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         2         3        13        15        22        28        32        33 
+## 0.6831394 0.6395437 0.7159110 0.6715560 0.5593935 0.5598167 1.0000000 1.0000000 
+##        34        47        48        51        54        55        62        76 
+## 0.9999830 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000 0.7113339 0.8174432 
+##        80        87        93        96        99       101       105       111 
+## 0.6886081 0.5565026 0.9593095 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000 
+##       119       133       142       144       147       152       158       165 
+## 1.0000000 0.7940982 0.5583444 0.5569816 0.5567329 0.9999233 1.0000000 1.0000000 
+##       169       177       182       183       184       186       188       196 
+## 1.0000000 1.0000000 0.6515010 0.6599276 0.6366992 0.6354895 0.6376484 0.9366490 
+##       197       200       201       210       222       228       239       240 
+## 0.7605509 0.9377475 0.5591727 0.5572211 1.0000000 1.0000000 1.0000000 1.0000000
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Evaluating model accuracy}
+\CommentTok{\# using confusion matrix}
+\FunctionTok{table}\NormalTok{(test\_reg}\SpecialCharTok{$}\NormalTok{type, predict\_reg)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                predict_reg
+##                 0.556502612557871 0.556732921474065 0.556981627711086
+##   Brown Dwarf                   0                 0                 0
+##   Red Dwarf                     0                 0                 0
+##   White Dwarf                   1                 1                 1
+##   Main Sequence                 0                 0                 0
+##   Supergiant                    0                 0                 0
+##   Hypergiant                    0                 0                 0
+##                predict_reg
+##                 0.557221095610294 0.558344395704132 0.559172677832303
+##   Brown Dwarf                   0                 0                 0
+##   Red Dwarf                     0                 0                 0
+##   White Dwarf                   1                 1                 1
+##   Main Sequence                 0                 0                 0
+##   Supergiant                    0                 0                 0
+##   Hypergiant                    0                 0                 0
+##                predict_reg
+##                 0.559393497645272 0.559816669867565 0.635489485595349
+##   Brown Dwarf                   0                 0                 1
+##   Red Dwarf                     0                 0                 0
+##   White Dwarf                   1                 1                 0
+##   Main Sequence                 0                 0                 0
+##   Supergiant                    0                 0                 0
+##   Hypergiant                    0                 0                 0
+##                predict_reg
+##                 0.63669917389658 0.637648432291747 0.639543725637416
+##   Brown Dwarf                  1                 1                 1
+##   Red Dwarf                    0                 0                 0
+##   White Dwarf                  0                 0                 0
+##   Main Sequence                0                 0                 0
+##   Supergiant                   0                 0                 0
+##   Hypergiant                   0                 0                 0
+##                predict_reg
+##                 0.65150101058472 0.659927617900358 0.671555978168669
+##   Brown Dwarf                  1                 1                 0
+##   Red Dwarf                    0                 0                 1
+##   White Dwarf                  0                 0                 0
+##   Main Sequence                0                 0                 0
+##   Supergiant                   0                 0                 0
+##   Hypergiant                   0                 0                 0
+##                predict_reg
+##                 0.683139354844538 0.68860806001041 0.711333893022965
+##   Brown Dwarf                   1                0                 1
+##   Red Dwarf                     0                1                 0
+##   White Dwarf                   0                0                 0
+##   Main Sequence                 0                0                 0
+##   Supergiant                    0                0                 0
+##   Hypergiant                    0                0                 0
+##                predict_reg
+##                 0.715910958466627 0.760550877182354 0.794098228432678
+##   Brown Dwarf                   0                 0                 0
+##   Red Dwarf                     1                 1                 1
+##   White Dwarf                   0                 0                 0
+##   Main Sequence                 0                 0                 0
+##   Supergiant                    0                 0                 0
+##   Hypergiant                    0                 0                 0
+##                predict_reg
+##                 0.817443217838594 0.936649007629988 0.937747502932836
+##   Brown Dwarf                   0                 0                 0
+##   Red Dwarf                     1                 1                 1
+##   White Dwarf                   0                 0                 0
+##   Main Sequence                 0                 0                 0
+##   Supergiant                    0                 0                 0
+##   Hypergiant                    0                 0                 0
+##                predict_reg
+##                 0.959309487242502 0.999923345550524 0.999982968807287
+##   Brown Dwarf                   0                 0                 0
+##   Red Dwarf                     0                 0                 0
+##   White Dwarf                   0                 0                 0
+##   Main Sequence                 1                 1                 1
+##   Supergiant                    0                 0                 0
+##   Hypergiant                    0                 0                 0
+##                predict_reg
+##                 0.999999999949513 0.999999999991586 0.999999999996012
+##   Brown Dwarf                   0                 0                 0
+##   Red Dwarf                     0                 0                 0
+##   White Dwarf                   0                 0                 0
+##   Main Sequence                 1                 1                 1
+##   Supergiant                    0                 0                 0
+##   Hypergiant                    0                 0                 0
+##                predict_reg
+##                 0.999999999996434 0.999999999998246 1
+##   Brown Dwarf                   0                 0 0
+##   Red Dwarf                     0                 0 0
+##   White Dwarf                   0                 0 0
+##   Main Sequence                 1                 1 0
+##   Supergiant                    0                 0 8
+##   Hypergiant                    0                 0 8
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{missing\_classerr }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(predict\_reg }\SpecialCharTok{!=}\NormalTok{ test\_reg}\SpecialCharTok{$}\NormalTok{type)}
+\FunctionTok{print}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{\textquotesingle{}Accuracy =\textquotesingle{}}\NormalTok{, }\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ missing\_classerr))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Accuracy = 0"
+\end{verbatim}
+
+Como puede verse, sorprendentemente el radio si que tiene cierta
+relevancia a la hora de generar nuestro modelo, por lo tanto, hicimos
+bien en mantener dicha variable en nuestro conjunto de datos.
+
+\hypertarget{conclusiones}{%
+\section{Conclusiones}\label{conclusiones}}
+
+Para leer las conclusiones se ruega leer el documento de entrega anexo:
+PRA2\_rmoyav.pdf
+
+\hypertarget{exportaciuxf3n-de-datos}{%
+\section{Exportación de datos}\label{exportaciuxf3n-de-datos}}
+
+Finalmente exportaremos los datos que han sido tratados mediante la
+siguiente linea de codigo.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{write.csv}\NormalTok{(stars, }\AttributeTok{file =} \StringTok{"../data/clean\_data.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+
+\end{document}

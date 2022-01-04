@@ -1,0 +1,381 @@
+---
+title: 'Tipología y ciclo de vida de los datos: Práctica 2'
+author: "Rubén Moya Vázquez <rmoyav@uoc.edu>"
+date: "04/01/2022"
+output:
+  pdf_document:
+    highlight: zenburn
+    toc: yes
+  html_document:
+    highlight: default
+    number_sections: yes
+    theme: cosmo
+    toc: yes
+    toc_depth: 2
+    includes:
+      in_header: PEC-header.html
+  word_document: default
+---
+
+# Carga de datos
+
+Comenzaremos por cargar los datos del csv en un dataframe, para ello ejecutamos
+el siguiente código. Para simplificar el acceso a los datos, renombraremos las
+columas de la siguiente manera:
+  * Temperature..K. -> temperature
+  * Luminosity.L.Lo. -> luminosity
+  * Radius.R.Ro. -> radius
+  * Absolute.magnitude.Mv. -> magnitude
+  * Star.type -> type
+  * Star.color -> color
+  * Spectral.Class -> spectral_class
+
+```{r message= FALSE, warning=FALSE}
+# Cargamos los datos en nuestro dataset.
+stars <- read.csv('../data/6 _class_csv.csv', sep = ",",  stringsAsFactors = FALSE)
+names(stars) <- c("temperature", "luminosity", "radius", "magnitude", "type", "color", "spectral_class")
+# Mostramos los primer y últimos 6 valores para observar que la carga
+# se ha realizado correctamente.
+head(stars)
+tail(stars)
+```
+
+# Limpieza de datos
+
+A continuación, veremos la estructura de los datos y si es necesario realizar
+una limpieza de valores nulos:
+
+```{r message= FALSE, warning=FALSE}
+str(stars)
+```
+Vemos que tenemos dos variables enteras (la temperatura en grados kelvin y el
+tipo de estrella), 3 variables de tipo numérico (radio, luminosidad y magnitud)
+y 2 del tipo carácter (color y clase espectral).
+
+## Factorización de columnas
+
+Antes de limpiar los posibles valores nulos vamos a normalizar los valores de
+las variables color y spectral_class para convertirlas en factores.
+
+```{r message= FALSE, warning=FALSE}
+# Buscamos los valores diferentes que puedan ser normalizados en la columna color
+unique(stars$color)
+
+# Vemos que hay varios valores que son asimilables al mismo pero con erratas tipográficas
+stars$color[stars$color == "Blue White"] <- "Blue-White"
+stars$color[stars$color == "Blue white "] <- "Blue-White"
+stars$color[stars$color == "Blue white"] <- "Blue-White"
+stars$color[stars$color == "Blue-white"] <- "Blue-White"
+stars$color[stars$color == "Blue "] <- "Blue"
+stars$color[stars$color == "white"] <- "White"
+stars$color[stars$color == "yellowish"] <- "Yellowish"
+stars$color[stars$color == "yellow-white"] <- "White-Yellow"
+stars$color[stars$color == "Yellowish White"] <- "White-Yellow"
+stars$color[stars$color == "Pale yellow orange"] <- "Yellow-Orange"
+
+# Convertimos la columna en factor
+stars$color <- as.factor(stars$color)
+
+# Convertimos la columna type en factor
+stars$type <- factor(stars$type, levels = c(0, 1, 2, 3, 4, 5), labels = c("Brown Dwarf", "Red Dwarf", "White Dwarf", "Main Sequence", "Supergiant", "Hypergiant"))
+```
+
+```{r message= FALSE, warning=FALSE}
+# Hacemos lo mismo con la columna spectral_class
+unique(stars$spectral_class)
+
+# En este caso observamos que los valores son los correctos, asi que factorizamos
+stars$spectral_class <- as.factor(stars$spectral_class)
+```
+## Gestión de valores nulos
+
+Ahora pasaremos a comprobar si hay valores nulos en alguna de las columnas de
+nuestro conjunto de datos. Haremos la comprobación en las columnas numéricas y
+en las enteras, ya que tanto en type como en las columnas factores sabemos que
+no hay.
+
+```{r message= FALSE, warning=FALSE}
+any(is.na(stars$temperature))
+any(is.na(stars$luminosity))
+any(is.na(stars$radius))
+any(is.na(stars$magnitude))
+```
+Estos cuatro valores "FALSE" nos indican que no hay ningún valor nulo en nuestro
+conjunto de datos. De todas formas, eso es algo que ya nos indicaban en la
+información del dataset de Kaggle.
+
+## Gestión de valores extremos.
+
+En primer lugar, utilizaremos diagramas de cajas para buscar los posibles
+valores extremos en las columnas de nuestro dataset.
+
+```{r message= FALSE, warning=FALSE}
+boxplot(stars$temperature, main = "Temperature", col = "orange", border = "brown", horizontal = TRUE, notch = TRUE)
+boxplot(stars$luminosity,  main = "Luminosity", col = "orange", border = "brown", horizontal = TRUE, notch = TRUE)
+boxplot(stars$radius,  main = "Radius", col = "orange", border = "brown", horizontal = TRUE, notch = TRUE)
+boxplot(stars$magnitude,  main = "Magnitude", col = "orange", border = "brown", horizontal = TRUE, notch = TRUE)
+```
+
+Las gráficas mostradas nos hacen pensar que en los tres primeros casos podríamos
+encontrarnos ante distribuciones log-normales, mientras que en la ultima,
+no observamos ningún outlier. Para asegurarnos de que en los casos anteriores
+nos hayamos ante distribuciones log-normales, estudiaremos sus histogramas.
+
+
+```{r message= FALSE, warning=FALSE}
+hist(log(stars$temperature), breaks = 16, prob = TRUE)
+lines(density(log(stars$temperature)), lwd = 4, col = "chocolate3")
+
+hist(log(stars$luminosity), breaks = 16, prob = TRUE)
+lines(density(log(stars$luminosity)), lwd = 4, col = "chocolate3")
+
+hist(log(stars$radius), breaks = 16, prob = TRUE)
+lines(density(log(stars$radius)), lwd = 4, col = "chocolate3")
+
+```
+
+Como podemos ver, ninguna de las distribuciones sigue la estructura de campana
+de Gauss presente en una distribución normal, así que podemos descartar que sean
+distribuciones log-normales sin necesidad de realizar más pruebas.
+
+
+Finalmente, en cuanto a los valores extremos, hemos decidido contemplarlos en
+nuestro análisis sin modificarlos. Esta decisión se ha tomado teniendo en cuenta
+que dichos valores responden a mediciones reales que, dado el pequeño tamaño de
+la muestra, pueden ser demasiado variadas como para mostrar una distribución
+normal. Además, consideramos que, en este punto, desconocemos la relevancia de
+dichos valores extremos como para descartarlos o modificarlos  de antemano.
+
+# Análisis de los Datos
+
+## Selección de los grupos de datos que se quieren analizar
+
+A continuación agruparemos los datos en función de diversos criterios para formar
+subconjuntos que puedan resultar interesantes para su análisis. Realizaremos
+varios conjuntos y no necesariamente todos ellos serán utilizados durante el
+análisis final.
+
+```{r message= FALSE, warning=FALSE}
+# Por tipo de estrella
+stars.brown_dwarfs <- stars[stars$type == 0, ]
+stars.red_dwarfs <- stars[stars$type == 1, ]
+stars.white_dwarfs <- stars[stars$type == 2, ]
+stars.main_sequence <- stars[stars$type == 3, ]
+stars.supergiant <- stars[stars$type == 4, ]
+stars.hypergiant <- stars[stars$type == 5, ]
+
+# Por clase espectral
+stars.O <- stars[stars$spectral_class == "O", ]
+stars.B <- stars[stars$spectral_class == "B", ]
+stars.A <- stars[stars$spectral_class == "A", ]
+stars.F <- stars[stars$spectral_class == "F", ]
+stars.G <- stars[stars$spectral_class == "G", ]
+stars.K <- stars[stars$spectral_class == "K", ]
+stars.M <- stars[stars$spectral_class == "M", ]
+
+# Por color
+stars.red <- stars[stars$color == "Red", ]
+stars.blue <- stars[stars$color == "Blue", ]
+stars.white <- stars[stars$color == "White", ]
+```
+
+## Comprobación de la normalidad y homogeneidad de la varianza
+
+### Estudio de la normalidad
+
+Vamos a estudiar brevemente si alguna de nuestras variables numéricas sigue una
+distribución normal. Para ello, nos serviremos de la prueba de normalidad de Anderson-Darling.
+
+```{r message= FALSE, warning=FALSE}
+library(nortest)
+
+alpha = 0.05
+col.names = colnames(stars)
+print("Las variables numéricas que no siguen una distribución normal son:")
+
+for (i in 1:ncol(stars)) {
+  if (is.numeric(stars[,i])) {
+    p_val = ad.test(stars[,i])$p.value
+    if (p_val < alpha) {
+      print(col.names[i])
+    }
+  }
+}
+
+```
+Es decir, ninguna de nuestras variables numéricas sigue una distribución normal, 
+pero... ¿Podrían seguirla?
+
+Vamos a analizar si alguna de nuestras variables podría ser candidata a la
+normalización mediante el estudio de las gráficas quantile-quantile y su
+histograma.
+
+```{r message= FALSE, warning=FALSE}
+par(mfrow=c(3,2))
+for(i in 1:ncol(stars)) {
+  if (is.numeric(stars[,i])){
+    qqnorm(stars[,i],main = paste("Quantile-Quantile de",colnames(stars)[i]))
+    qqline(stars[,i],col="red")
+    hist(stars[,i], 
+      main=paste("Histograma de", colnames(stars)[i]), 
+      xlab=colnames(stars)[i], freq = FALSE)
+  }
+}
+
+
+```
+
+Estos resultados nos muestran que varias de nuestras variables numéricas pueden
+ser candidatas a la normalización. De todas formas, descartaremos este proceso
+debido a que queremos que se estudien los datos reales de las mediciones de
+nuestro conjunto de estrellas.
+
+### Estudio de la homogeneidad de la varianza
+
+Para estudiar la homogeneidad de la varianza utilizaremos el test de Levene
+que nos permite realizar comparaciones de varianzas con 2 o más conjuntos de
+elementos.
+
+```{r message= FALSE, warning=FALSE}
+library(car)
+leveneTest(y = stars$temperature, group = stars$type, center = "median")
+leveneTest(y = stars$luminosity, group = stars$type, center = "median")
+leveneTest(y = stars$radius, group = stars$type, center = "median")
+leveneTest(y = stars$magnitude, group = stars$type, center = "median")
+```
+
+Vemos que los resultados de estos test nos hacen percatarnos de que las varianzas
+de nuestros grupos de datos no son homogeneas en todos los casos.
+
+# Pruebas estadísticas
+
+## ¿Las estrellas de la secuencia principal son más luminosas que las enanas blancas?
+
+A continuación vamos a realizar un contraste de hipotesis para confirmar o
+descartar el hecho de que las estrellas de la secuencia principal sean más
+luminosas que las enanas blancas. Para realizar este contraste utilizaremos 
+los grupos que hemos creado anteriormente.
+
+En nuestro caso, planteamos el contraste de hipótesis de dos muestras sobre la
+diferencia de medias, unilatera, con un nivel de confianza del 95%
+
+**H0: μ1 − μ2 = 0**
+ 
+**H1: μ1 − μ2 < 0**
+
+
+```{r message= FALSE, warning=FALSE}
+# Comentado para poder hacer el knit
+t.test(stars.main_sequence$luminosity, stars.white_dwarfs$luminosity, alternative = "less")
+```
+
+Como podemos ver, no tenemos suficientes muestras para realizar dicho contraste
+de hipotesis.
+
+## Random forest con k-fold cross validation
+
+A continuación vamos a aplicar un modelo de predicción conocido por su efectividad
+como es el Random forest con la metodología k-fold de validación cruzada, de
+manera que nos permita elaborar un modelo de predicción eficaz para la clasificación
+de estrellas en base a nuestro conjunto de datos. Gracias al uso de la validación
+cruzada nos evitaremos el problema de tener un algoritmo sobreentrenado, lo cual
+es un problema comun en este tipo de modelos.
+
+```{r message= FALSE, warning=FALSE}
+library(randomForest)
+library(caTools)
+library(caret)
+
+set.seed(12)
+
+# Creamos los grupos de entrenamiento y test
+split <- sample.split(stars$type, SplitRatio = 0.80)
+training_set <- subset(stars, split == TRUE)
+test_set <- subset(stars, split == FALSE)
+folds <- createFolds(training_set$type, k = 10)
+
+# Creamos nuestro random forest con cross validation
+cvRandomForest <- lapply(folds, function(x){
+  training_fold <- training_set[-x, ]
+  test_fold <- training_set[x, ]
+  clasifier <- randomForest(type ~ ., data = training_fold, ntree = 25)
+  y_pred <- predict(clasifier, newdata = test_fold)
+  cm <- table(test_fold$type, y_pred)
+  precision <- (cm[1,1] + cm[2,2]) / (cm[1,1] + cm[2,2] +cm[1,2] + cm[2,1])
+  return(precision)
+})
+
+# Precisión obtenida
+precisionRandomForest <- mean(as.numeric(cvRandomForest))
+print("Precisión de nuestro modelo:")
+precisionRandomForest
+```
+Como podemos ver, el modelo final tiene una precisión muy alta: 98.57%.
+
+Ahora visualizaremos de manera un poco más grafica los resultados de predecir
+clasificaciones con nuestro modelo gracias a su matriz de confusión:
+
+```{r message= FALSE, warning=FALSE}
+clasificadorRF <- randomForest(type ~ ., data = training_set, ntree = 25)
+y_pred <- predict(clasificadorRF, newdata = test_set)
+cm <- table(test_set$type, y_pred)
+cm
+```
+
+## Estudio del impacto del radio sobre la categorización de una estrella.
+
+Para acabar vamos a realizar un pequeño estudio de la influencia que tiene el
+radio (la variable de la que más dudamos) sobre la categorización final de una estrella.
+Para ello utilizaremos un análisis de correlación entre la variable y el tipo.
+Con el objetivo de medir dicha correlación, aplicaremos regresión logística.
+
+### Regresión logistica.
+
+```{r message= FALSE, warning=FALSE}
+library(caTools)
+
+# Dividimos el conjunto de datos
+split_reg <- sample.split(stars, SplitRatio = 0.8)
+   
+train_reg <- subset(stars, split == "TRUE")
+test_reg <- subset(stars, split == "FALSE")
+   
+# Training model
+logistic_model <- glm(type ~ radius, 
+                      data = train_reg, 
+                      family = "binomial")
+logistic_model
+   
+# Summary
+summary(logistic_model)
+   
+# Predict test data based on model
+predict_reg <- predict(logistic_model, test_reg, type = "response")
+predict_reg  
+   
+# Evaluating model accuracy
+# using confusion matrix
+table(test_reg$type, predict_reg)
+   
+missing_classerr <- mean(predict_reg != test_reg$type)
+print(paste('Accuracy =', 1 - missing_classerr))
+   
+```
+
+Como puede verse, sorprendentemente el radio si que tiene cierta relevancia a la
+hora de generar nuestro modelo, por lo tanto, hicimos bien en mantener dicha
+variable en nuestro conjunto de datos.
+
+# Conclusiones
+
+Para leer las conclusiones se ruega leer el documento de entrega anexo:
+PRA2_rmoyav.pdf
+
+# Exportación de datos
+
+Finalmente exportaremos los datos que han sido tratados mediante la siguiente
+linea de codigo.
+
+```{r message= FALSE, warning=FALSE}
+write.csv(stars, file = "../data/clean_data.csv")
+```
